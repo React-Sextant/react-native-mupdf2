@@ -1,4 +1,5 @@
-import {NativeModules, DeviceEventEmitter, AsyncStorage, NetInfo} from 'react-native';
+import {NativeModules, DeviceEventEmitter, AsyncStorage} from 'react-native';
+import NetInfo from '@react-native-community/netinfo'
 import Toast from "antd-mobile/lib/toast";
 import RNFetchBlob from 'rn-fetch-blob'
 import Progress from 'react-sextant/lib/root-view/progress'
@@ -109,9 +110,10 @@ export function sendData(args){
 /**
  * 下载文件
  * **/
+let mupdf_unsubscribe = undefined;
 export function downloadFileFetch(params,callback,errorBack){
     try{
-        NetInfo.isConnected.addEventListener('connectionChange', handleConnectivityChange);
+        mupdf_unsubscribe = NetInfo.addEventListener(handleConnectivityChange);
         Progress.setLoading(0.01);
         let task = RNFetchBlob.config({
             fileCache: true,
@@ -146,7 +148,7 @@ export function downloadFileFetch(params,callback,errorBack){
         });
 
         //检测当前网络
-        NetInfo.getConnectionInfo().then((connectionInfo) => {
+        NetInfo.fetch().then((connectionInfo) => {
             if(connectionInfo.type==='none'){
                 handleConnectivityChange()
             }
@@ -270,7 +272,7 @@ export function handleListenMuPDF(msg,params){
 
 function catchError(errorBack,err){
     Progress.setLoading(0);
-    NetInfo.isConnected.removeEventListener('connectionChange', handleConnectivityChange);
+    typeof mupdf_unsubscribe === "function"&&mupdf_unsubscribe()
     DeviceEventEmitter.removeAllListeners('fetch_download');
     if(typeof errorBack === "function"){
         _isInMuPdf = false;
