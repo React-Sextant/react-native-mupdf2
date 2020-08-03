@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true">
+        <TextView
+            android:id="@+id/pageNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/page_num"
+            android:textColor="#FFFFFF"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <!--        批注按钮-->
+        <ViewAnimator
+            android:id="@+id/floatingActionButtonSwitcher"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:translationY="0dp"
+            android:elevation="1dp"
+            android:layout_weight="1"
+            android:layout_gravity="end">
+            <ScrollView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+                <LinearLayout
+                    android:id="@+id/idDynamicMenus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:orientation="vertical" />
+            </ScrollView>
+        </ViewAnimator>
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/floatingActionsMenu"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="10dp"
+            fab:fab_addButtonColorNormal="#FFFFFF"
+            fab:fab_addButtonColorPressed="#FFFFFF"
+            fab:fab_addButtonPlusIconColor="#999999" />
+
+        <ViewAnimator
+            android:id="@+id/idBottomBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onBubbling">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#DD000000"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="35dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:clickable="true"
+                        android:onClick="onSmartMoveBackwards"
+                        android:text="@string/prechapter"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="15dp" />
+
+                    <SeekBar
+                        android:id="@+id/pageSlider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="42dp"
+                        android:layout_marginRight="42dp"
+                        android:maxHeight="3dp"
+                        android:minHeight="3dp"
+                        android:progressDrawable="@drawable/seekbardragstyle"
+                        android:thumb="@mipmap/barbottommenu"
+                        android:thumbOffset="0dip" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:clickable="true"
+                        android:onClick="onSmartMoveForwards"
+                        android:text="@string/nextchapter"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="15dp" />
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:orientation="horizontal"
+                    >
+                    <LinearLayout
+                        android:id="@+id/outlineButton"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:background="@drawable/button"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="18dp"
+                            android:clickable="false"
+                            android:src="@mipmap/outlinebottommenu" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:background="@drawable/button"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="18dp"
+                            android:onClick="onPizhuClick"
+                            android:src="@mipmap/pencil" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:background="@drawable/button"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="18dp"
+                            android:onClick="onFreetextClick"
+                            android:src="@mipmap/writetext"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:background="@drawable/button"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="18dp"
+                            android:onClick="onTurnClick"
+                            android:src="@mipmap/turnvertical" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ViewAnimator>
+
+    </LinearLayout>
+
+</RelativeLayout>
