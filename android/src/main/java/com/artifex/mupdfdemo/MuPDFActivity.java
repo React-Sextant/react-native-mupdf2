@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.RectF;
@@ -798,7 +799,7 @@ public class MuPDFActivity extends ReactActivity implements FilePicker.FilePicke
         mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE)
-                    search(1);
+                    onSearchSubmit(v);
                 return false;
             }
         });
@@ -806,7 +807,7 @@ public class MuPDFActivity extends ReactActivity implements FilePicker.FilePicke
         mSearchText.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER)
-                    search(1);
+                    onSearchSubmit(v);
                 return false;
             }
         });
@@ -866,7 +867,7 @@ public class MuPDFActivity extends ReactActivity implements FilePicker.FilePicke
          * **/
         if(savedInstanceState == null||!savedInstanceState.getBoolean("ButtonsHidden", false))
             mButtonsVisible = true;
-            hideButtons();
+        hideButtons();
 
         if(savedInstanceState != null && savedInstanceState.getBoolean("SearchMode", false))
             searchModeOn();
@@ -1039,6 +1040,13 @@ public class MuPDFActivity extends ReactActivity implements FilePicker.FilePicke
         if (mReflow)
             outState.putBoolean("ReflowMode", true);
     }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDocView.refresh(false);
+    }
+
 
     @Override
     protected void onPause() {

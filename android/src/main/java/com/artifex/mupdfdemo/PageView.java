@@ -386,8 +386,8 @@ public abstract class PageView extends ViewGroup {
                             public void onEndLine() {
                                 if (!rect.isEmpty())
                                     canvas.drawRect(rect.left * scale, rect.top * scale, rect.right * scale, rect.bottom * scale, paint);
-                                    if (eventCallback != null)
-                                        eventCallback.touchMoveOnPdfPosition(new RectF(mSelectFirstRect.left,mSelectFirstRect.top,rect.right,rect.bottom),scale);
+                                if (eventCallback != null)
+                                    eventCallback.touchMoveOnPdfPosition(new RectF(mSelectFirstRect.left,mSelectFirstRect.top,rect.right,rect.bottom),scale);
                             }
                         });
                     }
@@ -856,6 +856,18 @@ public abstract class PageView extends ViewGroup {
             }
 
             CancellableTaskDefinition<Void, Void> task;
+
+            try {
+                if(mDrawing == null){
+                    int mPatchAreaHeight = patchArea.bottom - patchArea.top;
+                    int mPatchAreaWidth = patchArea.right - patchArea.left;
+                    mPatchBm = Bitmap.createBitmap(mPatchAreaWidth, mPatchAreaHeight, Bitmap.Config.ARGB_8888);
+                    cancelDraw();
+                }
+            } catch (OutOfMemoryError e) {
+                Log.e(TAG, e.getMessage(), e);
+                flagHQ = false;
+            }
 
             if (completeRedraw)
                 task = getDrawPageTask(mPatchBm, patchViewSize.x, patchViewSize.y,
